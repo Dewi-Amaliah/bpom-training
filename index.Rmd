@@ -49,13 +49,16 @@ background-size: cover
 # Principal Component Analysis dengan R
 <br>
 <br>
-## Dewi Amaliah, MBAt
+## Dewi Amaliah
 ##[`r fa("linkedin", fill = "steelblue")`](https://www.linkedin.com/in/dewi-lestari-amaliah-579b231a1/) [`r fa("github", fill = "black")`](https://github.com/Dewi-Amaliah)
 
 ---
 background-image:url(images/bg.png)
 background-size: cover
 ## Principal Component Analysis (PCA)
+
+- Unsupervised learning
+- Teknik untuk mereduksi 
 ---
 background-image:url(images/bg.png)
 background-size: cover
