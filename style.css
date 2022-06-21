@@ -1,0 +1,26 @@
+.remark-slide-content > h1:first-of-type {
+  margin-top: 0px;
+  margin-left: 0px;
+  color: white;
+}
+
+:root {
+  --link-color: #138D75;
+  --text-bold-color: #138D75;
+}
+
+/* custom.css */
+.left-code {
+  color: #777;
+  width: 25%;
+  height: 92%;
+  float: left;
+}
+.right-plot {
+  width: 70%;
+  float: right;
+  padding-left: 1%;
+}
+
+
+

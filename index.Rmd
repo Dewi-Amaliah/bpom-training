@@ -1,0 +1,273 @@
+---
+title: "Principal Component Analysis using R"
+subtitle: "&#x2694;&#xFE0F; xaringan +<br/>&#x1F60E; xaringanthemer"  
+author: 
+  - "Dewi Amaliah"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    seal: false
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+library(knitr)
+
+opts_chunk$set(echo = TRUE, 
+               warning = FALSE, 
+               message = FALSE,
+               cache = TRUE, 
+               cache.path = "cache/",
+               fig.retina = 3)
+library(fontawesome)
+library(tidyverse)
+library(xaringanExtra)
+library(MASS)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+
+
+style_duo_accent(primary_color = "#035AA6", secondary_color = "#03A696")
+style_xaringan(header_h1_font_size = "4.25rem",
+               header_color = "#1E8449")
+```
+
+class: left
+
+background-image:url(images/cover.png)
+background-size: cover
+
+# Principal Component Analysis dengan R
+<br>
+<br>
+## Dewi Amaliah, MBAt
+##[`r fa("linkedin", fill = "steelblue")`](https://www.linkedin.com/in/dewi-lestari-amaliah-579b231a1/) [`r fa("github", fill = "black")`](https://github.com/Dewi-Amaliah)
+
+---
+background-image:url(images/bg.png)
+background-size: cover
+## Principal Component Analysis (PCA)
+---
+background-image:url(images/bg.png)
+background-size: cover
+## Contoh penerapan
+---
+background-image:url(images/bg.png)
+background-size: cover
+## Apa saja yang dibutuhkan?
+---
+background-image:url(images/bg.png)
+background-size: cover
+class: center, middle
+
+# Contoh 🥣
+---
+background-image:url(images/bg.png)
+background-size: cover
+## Segmentasi Produk
+
+```{r, echo = FALSE}
+use_panelset()
+```
+
+
+.panelset[
+.panel[.panel-name[🎯 Tujuan]
+
+
+Melakukan segmentasi terhadap beberapa Merk Sereal 
+
+]
+
+.panel[.panel-name[📊 Data]
+
+- Informasi nilai gizi pada kemasan 65 jenis sereal yang dipasarkan di Amerika Serikat. 
+
+- Variabel-variabel yang ada di dalam data ini adalah:
+
+  + mfr : Manufacturer (perusahaan) yang memproduksi sereal tersebut 
+  + caleries : Jumlah kalori/ sajian
+  + protein: Jumlah protein (gram)/ sajian
+  + fat: Jumlah lemak (gram) / sajian
+  + sodium: Jumlah sodium (miligrams) / sajian
+  + fibre: Jumlah serat (gram) / sajian
+  + carbo: Jumlah karbohidrat kompleks (gram) / sajian
+  + sugars: Jumlah gula (gram) / sajian
+  + shelf : Display di rak berapa di toko (1, 2, 3)
+  + potassium: Jumlah potassium (gram)
+  + vitamins: Dikelompokkan ke dalam tiga kategori: none, enriched, 100%
+  
+- Sumber data: http://lib.stat.cmu.edu/datasets/1993.expo/ atau melalui package `MASS` (Venables & Ripley 2002).
+  
+
+]
+
+.panel[.panel-name[⚙️ Langkah-langkah]
+
+1. Load data
+2. Memilih variabel (hanya numerik)
+3. Melakukan PCA
+4. Membuat scree-plot
+5. Membuat biplot
+]
+]
+---
+background-image:url(images/bg.png)
+background-size: cover
+## 🎯 Load data, memilih variable dan melakukan PCA 
+
+.panelset[
+.panel[.panel-name[📊 Load data]
+```{r}
+library(tidyverse)
+library(MASS) # untuk mengakses dataset
+
+cereal <- UScereal
+```
+]
+.panel[.panel-name[🎯 Memilih variabel & PCA]
+
+```{r}
+# memilih variabel
+cereal_metrics <- cereal %>%
+  dplyr::select(-mfr, -shelf, -vitamins) # unselect bisa dilakukan dengan menambahkan tanda negatif (-)
+
+# melakukan PCA
+
+hasil_pca <- cereal_metrics %>%
+  prcomp(scale. = TRUE) # standardisasi variabel
+
+```
+
+]
+
+.panel[.panel-name[👩‍💻 Interpretasi hasil]
+
+```{r}
+summary(hasil_pca)
+```
+
+#### Interpretasi
+
+Terdapat 8 principal component yang menjelaskan keseluruhan variasi dari data. Sampai dengan komponen utama ke-4, total variasi data yang berhasil dijelaskan adalah 92%.
+
+]
+]
+---
+background-image:url(images/bg.png)
+background-size: cover
+
+### 📉 Membuat scree-plot 
+
+.pull-left[
+
+```{r, out.width = "85%"}
+# membuat scree plot
+screeplot(hasil_pca,type = 'l')
+```
+]
+.pull-right[
+
+<br>
+
+**Interpretasi**
+
+- Siku terlihat pada PC ke-2, sehingga 2 PC sudah dapat digunakan untuk menjelaskan data.
+- Terlihat bahwa total sekitar 70% variasi pada data dijelaskan oleh PC1 dan PC2
+]
+---
+
+background-image:url(images/bg.png)
+background-size: cover
+
+### 📉 Membuat biplot (untuk korelasi antar variabel)
+
+.pull-left[
+
+```{r, results='hide', out.width="85%"}
+biplot(hasil_pca)
+```
+]
+
+.pull-right[
+
+<br>
+
+**Interpretasi**
+
+- Jika sudut antar-variable kecil, maka dapat dikatakan variabel-variabel tersebut memiliki kemiripan. 
+[Contoh: calories, sugars, fat, dan carbo memiliki kemiripan satu dengan lainnya]()
+- Jika variabel-variabel membentuk sudut siku-siku (90°), maka dapat dikatakan bahwa variabel-variabel tersebut tidak berkorelasi. [Contoh: calories tidak berkorelasi dengan potassium]()
+- Jika variabel-variabel berlawanan arah, maka dapat dikatakan varaibel-variabel tersebut berkorelasi negatif. [Tidak terlihat pada kasus ini]()  
+]
+
+---
+background-image:url(images/bg.png)
+background-size: cover
+
+### 📉 Membuat biplot (untuk mengelompokkan observasi)
+
+.pull-left[
+
+```{r, results='hide', out.width="85%"}
+biplot(hasil_pca)
+```
+]
+
+.pull-right[
+
+**Interpretasi**
+
+- All-Bran with Extra Fiber, All-Bran, 100% Bran, Grape-Nuts, Great Grains Pecan kemungkinan adalah outlier.
+- Merk-merk yang berdekatan memiliki karakteristik yang mirip. [Contoh: Cinnamon Toast Crunch, Crispy Blend, dan Cap Crunch]()
+- Merk-merk yang berjauhan memiliki karakteristik yang berbeda. [Contoh: Great Grains Pecan dan  All-Bran with Extra Fiber]()
+- Merk-merk dicirikan dengan variabel yang berdeketan. [Contoh: All-Bran, 100% Bran dicirikan oleh kandungan serat yang tinggi.  Oatmeal Raisin Crisp, Cinnamon Toast Crunch, Crispy Blend, dan Cap Crunch dicirikan oleh kandungan gula yang tinggi]()
+]
+
+---
+background-image:url(images/bg.png)
+background-size: cover
+
+class: center, middle
+
+# Mari Kita Coba 🍕
+---
+
+background-image:url(images/bg.png)
+background-size: cover
+
+# Hands On
+### File-file yang dibutuhkan untuk praktik dapat diunduh di:
+
+### http://s.bps.go.id/bpom-handson-pca
+
+
+```{r, echo = FALSE, eval = FALSE}
+library(countdown)
+countdown(minutes = 1, seconds = 0,
+          warn_when = 60,
+          left = 0, right = 0,
+          padding = "50px",
+          margin = "5%",
+          font_size = "6em")
+```
+
+---
+
+background-image:url(images/bg.png)
+background-size: cover
+
+class: center, middle
+
+# Terima Kasih 🙏
+
+Paparan ini dibuat dengan menggunakan R package [**xaringan**](https://github.com/yihui/xaringan).

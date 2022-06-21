@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Principal Component Analysis using R</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Dewi Amaliah" />
+    <meta name="date" content="2022-06-21" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: left
+
+background-image:url(images/cover.png)
+background-size: cover
+
+# Principal Component Analysis dengan R
+&lt;br&gt;
+&lt;br&gt;
+## Dewi Amaliah, MBAt
+##[&lt;svg style="height:0.8em;top:.04em;position:relative;fill:steelblue;" viewBox="0 0 448 512"&gt;&lt;path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/&gt;&lt;/svg&gt;](https://www.linkedin.com/in/dewi-lestari-amaliah-579b231a1/) [&lt;svg style="height:0.8em;top:.04em;position:relative;fill:black;" viewBox="0 0 496 512"&gt;&lt;path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/&gt;&lt;/svg&gt;](https://github.com/Dewi-Amaliah)
+
+---
+background-image:url(images/bg.png)
+background-size: cover
+## Principal Component Analysis (PCA)
+---
+background-image:url(images/bg.png)
+background-size: cover
+## Contoh penerapan
+---
+background-image:url(images/bg.png)
+background-size: cover
+## Apa saja yang dibutuhkan?
+---
+background-image:url(images/bg.png)
+background-size: cover
+class: center, middle
+
+# Contoh 🥣
+---
+background-image:url(images/bg.png)
+background-size: cover
+## Segmentasi Produk
+
+
+
+
+.panelset[
+.panel[.panel-name[🎯 Tujuan]
+
+
+Melakukan segmentasi terhadap beberapa Merk Sereal 
+
+]
+
+.panel[.panel-name[📊 Data]
+
+- Informasi nilai gizi pada kemasan 65 jenis sereal yang dipasarkan di Amerika Serikat. 
+
+- Variabel-variabel yang ada di dalam data ini adalah:
+
+  + mfr : Manufacturer (perusahaan) yang memproduksi sereal tersebut 
+  + caleries : Jumlah kalori/ sajian
+  + protein: Jumlah protein (gram)/ sajian
+  + fat: Jumlah lemak (gram) / sajian
+  + sodium: Jumlah sodium (miligrams) / sajian
+  + fibre: Jumlah serat (gram) / sajian
+  + carbo: Jumlah karbohidrat kompleks (gram) / sajian
+  + sugars: Jumlah gula (gram) / sajian
+  + shelf : Display di rak berapa di toko (1, 2, 3)
+  + potassium: Jumlah potassium (gram)
+  + vitamins: Dikelompokkan ke dalam tiga kategori: none, enriched, 100%
+  
+- Sumber data: http://lib.stat.cmu.edu/datasets/1993.expo/ atau melalui package `MASS` (Venables &amp; Ripley 2002).
+  
+
+]
+
+.panel[.panel-name[⚙️ Langkah-langkah]
+
+1. Load data
+2. Memilih variabel (hanya numerik)
+3. Melakukan PCA
+4. Membuat scree-plot
+5. Membuat biplot
+]
+]
+---
+background-image:url(images/bg.png)
+background-size: cover
+## 🎯 Load data, memilih variable dan melakukan PCA 
+
+.panelset[
+.panel[.panel-name[📊 Load data]
+
+```r
+library(tidyverse)
+library(MASS) # untuk mengakses dataset
+
+cereal &lt;- UScereal
+```
+]
+.panel[.panel-name[🎯 Memilih variabel &amp; PCA]
+
+
+```r
+# memilih variabel
+cereal_metrics &lt;- cereal %&gt;%
+  dplyr::select(-mfr, -shelf, -vitamins) # unselect bisa dilakukan dengan menambahkan tanda negatif (-)
+
+# melakukan PCA
+
+hasil_pca &lt;- cereal_metrics %&gt;%
+  prcomp(scale. = TRUE) # standardisasi variabel
+```
+
+]
+
+.panel[.panel-name[👩‍💻 Interpretasi hasil]
+
+
+```r
+summary(hasil_pca)
+```
+
+```
+## Importance of components:
+##                           PC1    PC2    PC3     PC4     PC5     PC6     PC7
+## Standard deviation     2.0595 1.1595 1.0847 0.77916 0.70038 0.32184 0.17080
+## Proportion of Variance 0.5302 0.1681 0.1471 0.07589 0.06132 0.01295 0.00365
+## Cumulative Proportion  0.5302 0.6982 0.8453 0.92120 0.98252 0.99547 0.99911
+##                            PC8
+## Standard deviation     0.08427
+## Proportion of Variance 0.00089
+## Cumulative Proportion  1.00000
+```
+
+#### Interpretasi
+
+Terdapat 8 principal component yang menjelaskan keseluruhan variasi dari data. Sampai dengan komponen utama ke-4, total variasi data yang berhasil dijelaskan adalah 92%.
+
+]
+]
+---
+background-image:url(images/bg.png)
+background-size: cover
+
+### 📉 Membuat scree-plot 
+
+.pull-left[
+
+
+```r
+# membuat scree plot
+screeplot(hasil_pca,type = 'l')
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-5-1.png" width="85%" /&gt;
+]
+.pull-right[
+
+&lt;br&gt;
+
+**Interpretasi**
+
+- Siku terlihat pada PC ke-2, sehingga 2 PC sudah dapat digunakan untuk menjelaskan data.
+- Terlihat bahwa total sekitar 70% variasi pada data dijelaskan oleh PC1 dan PC2
+]
+---
+
+background-image:url(images/bg.png)
+background-size: cover
+
+### 📉 Membuat biplot (untuk korelasi antar variabel)
+
+.pull-left[
+
+
+```r
+biplot(hasil_pca)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="85%" /&gt;
+]
+
+.pull-right[
+
+&lt;br&gt;
+
+**Interpretasi**
+
+- Jika sudut antar-variable kecil, maka dapat dikatakan variabel-variabel tersebut memiliki kemiripan. 
+[Contoh: calories, sugars, fat, dan carbo memiliki kemiripan satu dengan lainnya]()
+- Jika variabel-variabel membentuk sudut siku-siku (90°), maka dapat dikatakan bahwa variabel-variabel tersebut tidak berkorelasi. [Contoh: calories tidak berkorelasi dengan potassium]()
+- Jika variabel-variabel berlawanan arah, maka dapat dikatakan varaibel-variabel tersebut berkorelasi negatif. [Tidak terlihat pada kasus ini]()  
+]
+
+---
+background-image:url(images/bg.png)
+background-size: cover
+
+### 📉 Membuat biplot (untuk mengelompokkan observasi)
+
+.pull-left[
+
+
+```r
+biplot(hasil_pca)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" width="85%" /&gt;
+]
+
+.pull-right[
+
+**Interpretasi**
+
+- All-Bran with Extra Fiber, All-Bran, 100% Bran, Grape-Nuts, Great Grains Pecan kemungkinan adalah outlier.
+- Merk-merk yang berdekatan memiliki karakteristik yang mirip. [Contoh: Cinnamon Toast Crunch, Crispy Blend, dan Cap Crunch]()
+- Merk-merk yang berjauhan memiliki karakteristik yang berbeda. [Contoh: Great Grains Pecan dan  All-Bran with Extra Fiber]()
+- Merk-merk dicirikan dengan variabel yang berdeketan. [Contoh: All-Bran, 100% Bran dicirikan oleh kandungan serat yang tinggi.  Oatmeal Raisin Crisp, Cinnamon Toast Crunch, Crispy Blend, dan Cap Crunch dicirikan oleh kandungan gula yang tinggi]()
+]
+
+---
+background-image:url(images/bg.png)
+background-size: cover
+
+class: center, middle
+
+# Mari Kita Coba 🍕
+---
+
+background-image:url(images/bg.png)
+background-size: cover
+
+# Hands On
+### File-file yang dibutuhkan untuk praktik dapat diunduh di:
+
+### http://s.bps.go.id/bpom-handson-pca
+
+
+
+
+---
+
+background-image:url(images/bg.png)
+background-size: cover
+
+class: center, middle
+
+# Terima Kasih 🙏
+
+Paparan ini dibuat dengan menggunakan R package [**xaringan**](https://github.com/yihui/xaringan).
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
