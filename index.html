@@ -4,7 +4,7 @@
     <title>Principal Component Analysis using R</title>
     <meta charset="utf-8" />
     <meta name="author" content="Dewi Amaliah" />
-    <meta name="date" content="2022-06-21" />
+    <meta name="date" content="2022-06-22" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/panelset/panelset.css" rel="stylesheet" />
     <script src="libs/panelset/panelset.js"></script>
@@ -32,18 +32,66 @@ background-size: cover
 ---
 background-image:url(images/bg.png)
 background-size: cover
+&lt;br&gt;
+
 ## Principal Component Analysis (PCA)
 
-- Unsupervised learning
-- Teknik untuk mereduksi 
+&gt; Principal component analysis (PCA) is a technique that transforms high-dimensions data into lower-dimensions while retaining as much information as possible. 
+
+&gt; Bring out strong patterns from large and complex datasets.
+
+&lt;br&gt;
+&lt;br&gt;
+
+- Salah satu contoh unsupervised learning.
+- Salah satu tools yang penting dalam data science tool box.
+
 ---
 background-image:url(images/bg.png)
 background-size: cover
+
+## Ilustrasi
+
+&gt; Misalkan kita memiliki 15 *gene expression* dari 60 ekor tikus, sehingga kita memiliki tabel dengan dimensi 15x60.
+
+
+&gt; Bagaimana kita bisa mengetahui mana tikus yang memiliki ciri-ciri yang sama ketika kita memiliki 15 variabel yang berbeda? [Kompleks.]()
+
+.center[
+&lt;div class="figure"&gt;
+&lt;img src="images/pca-review.png" alt="15 variabel ekspresi gen tikus yang digambarkan dalam plot 2 dimensi dengan menggunakan PCA." width="321" /&gt;
+&lt;p class="caption"&gt;15 variabel ekspresi gen tikus yang digambarkan dalam plot 2 dimensi dengan menggunakan PCA.&lt;/p&gt;
+&lt;/div&gt;
+]
+
+---
+background-image:url(images/bg.png)
+background-size: cover
+
+&lt;br&gt;
+&lt;br&gt;
+
 ## Contoh penerapan
+
+- Pada **studi tentang obat-obatan**, kita mungkin ingin mengelompokkan obat-obatan dengan kandungan (substance) yang sama. 
+- Untuk mengetahui **kepuasan konsumen**, biasanya kuesioner dengan pertanyaan yang banyak disebar. 
+- Menilai **kelayakan kredit** pada nasabah bank. 
+- **Mengelompokkan negara-negara** berdasarkan karakteristik tertentu, misalnya berdasarkan variabel-variabel ekonomi. 
+
 ---
 background-image:url(images/bg.png)
 background-size: cover
+&lt;br&gt;
+&lt;br&gt;
+
 ## Apa saja yang dibutuhkan?
+
+1. Data numerik.
+2. Data yang harus distandardisasi. 
+3. Menghitung matriks covarians.
+4. Menghitung eigenvalue dan eigenvector dari matriks covarians.
+5. Membuat feature vector 
+
 ---
 background-image:url(images/bg.png)
 background-size: cover
@@ -168,7 +216,7 @@ background-size: cover
 screeplot(hasil_pca,type = 'l')
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-5-1.png" width="85%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="85%" /&gt;
 ]
 .pull-right[
 
@@ -193,7 +241,7 @@ background-size: cover
 biplot(hasil_pca)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" width="85%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" width="85%" /&gt;
 ]
 
 .pull-right[
@@ -221,7 +269,7 @@ background-size: cover
 biplot(hasil_pca)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" width="85%" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" width="85%" /&gt;
 ]
 
 .pull-right[
@@ -249,7 +297,7 @@ background-size: cover
 # Hands On
 ### File-file yang dibutuhkan untuk praktik dapat diunduh di:
 
-### http://s.bps.go.id/bpom-handson-pca
+### https://linktr.ee/dspbpom
 
 
 

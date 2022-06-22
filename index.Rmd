@@ -55,18 +55,65 @@ background-size: cover
 ---
 background-image:url(images/bg.png)
 background-size: cover
+<br>
+
 ## Principal Component Analysis (PCA)
 
-- Unsupervised learning
-- Teknik untuk mereduksi 
+> Principal component analysis (PCA) is a technique that transforms high-dimensions data into lower-dimensions while retaining as much information as possible. 
+
+> Bring out strong patterns from large and complex datasets.
+
+<br>
+<br>
+
+- Salah satu contoh unsupervised learning.
+- Salah satu tools yang penting dalam data science tool box.
+
 ---
 background-image:url(images/bg.png)
 background-size: cover
+
+## Ilustrasi
+
+> Misalkan kita memiliki 15 *gene expression* dari 60 ekor tikus, sehingga kita memiliki tabel dengan dimensi 15x60.
+
+
+> Bagaimana kita bisa mengetahui mana tikus yang memiliki ciri-ciri yang sama ketika kita memiliki 15 variabel yang berbeda? [Kompleks.]()
+
+.center[
+```{r, echo = FALSE, fig.cap = "15 variabel ekspresi gen tikus yang digambarkan dalam plot 2 dimensi dengan menggunakan PCA."}
+include_graphics("images/pca-review.png")
+```
+]
+
+---
+background-image:url(images/bg.png)
+background-size: cover
+
+<br>
+<br>
+
 ## Contoh penerapan
+
+- Pada **studi tentang obat-obatan**, kita mungkin ingin mengelompokkan obat-obatan dengan kandungan (substance) yang sama. 
+- Untuk mengetahui **kepuasan konsumen**, biasanya kuesioner dengan pertanyaan yang banyak disebar. 
+- Menilai **kelayakan kredit** pada nasabah bank. 
+- **Mengelompokkan negara-negara** berdasarkan karakteristik tertentu, misalnya berdasarkan variabel-variabel ekonomi. 
+
 ---
 background-image:url(images/bg.png)
 background-size: cover
+<br>
+<br>
+
 ## Apa saja yang dibutuhkan?
+
+1. Data numerik.
+2. Data yang harus distandardisasi. 
+3. Menghitung matriks covarians.
+4. Menghitung eigenvalue dan eigenvector dari matriks covarians.
+5. Membuat feature vector 
+
 ---
 background-image:url(images/bg.png)
 background-size: cover
@@ -251,7 +298,7 @@ background-size: cover
 # Hands On
 ### File-file yang dibutuhkan untuk praktik dapat diunduh di:
 
-### http://s.bps.go.id/bpom-handson-pca
+### https://linktr.ee/dspbpom
 
 
 ```{r, echo = FALSE, eval = FALSE}
